@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="headerFragment">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/index.css}">
+        <link rel="stylesheet" th:href="@{/css/reset.css}">
+        <!-- 구글폰트 -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Slick.js -->
+        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+        <script type="text/javascript"
+                src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <title>Mannam 거꾸로 해도 mannaM...</title>
+        <link rel="icon" type="image/png" href="./img/subak.png">
+    </head>
+
+    <body>
+    <!-- 대가리 -->
+    <header>
+        <div class="container">
+            <a href="#">
+                <img src="./img/subakmarket.png" alt="중고 거래부터 동네 정보까지" title="이것은 수박이여 당근이여!">
+            </a>
+            <nav>
+                <ul>
+                    <li>추천</li>
+                    <li>공지</li>
+                    <li>건의</li>
+                    <li>지도</li>
+                    <li>게시판</li>
+                </ul>
+            </nav>
+            <div class="search">
+                <input placeholder="물품이나 동네를 검색해보세요">
+                <i class="xi-search"></i>
+                <!--  -->
+                <button><a href="login1.html">채팅하기</a></button>
+                <!--  -->
+            </div>
+            <div class="login">
+                <button><a href="#">로그인</a></button>
+                <button><a href="#">회원가입</a></button>
+            </div>
+        </div>
+    </header>
+    <aside>
+        <nav>
+            <ul>
+                <li class="edit"><a href="">편집</a></li>
+                <li><h3>즐겨찾기</h3></li>
+            </ul>
+            <hr>
+            <ul>
+                <li><a href="">산악게시판</a></li>
+                <li><a href="">자전거게시판</a></li>
+                <li><a href="">+</a></li>
+            </ul>
+        </nav>
+        <div class="arrow">▶</div>
+    </aside>
+
+</th:block>
