@@ -12,6 +12,7 @@ header {
     position: fixed;
     z-index: 999;
     /* 999 절대값 */
+
 }
 
 header>.container {
