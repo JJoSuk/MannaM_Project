@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/css/index.css}">
+        <link rel="stylesheet" th:href="@{/css/headerFooter.css}">
         <link rel="stylesheet" th:href="@{/css/reset.css}">
         <!-- 구글폰트 -->
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -19,15 +19,15 @@
         <script type="text/javascript"
                 src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
         <title>Mannam 거꾸로 해도 mannaM...</title>
-        <link rel="icon" type="image/png" href="./img/subak.png">
+        <link rel="icon" type="image/png" th:href="@{/img/subak.png}">
     </head>
 
     <body>
     <!-- 대가리 -->
     <header>
         <div class="container">
-            <a href="#">
-                <img src="./img/subakmarket.png" alt="중고 거래부터 동네 정보까지" title="이것은 수박이여 당근이여!">
+            <a href="/">
+                <img th:src="@{/img/subakmarket.png}" alt="중고 거래부터 동네 정보까지" title="이것은 수박이여 당근이여!">
             </a>
             <nav>
                 <ul>
@@ -46,7 +46,7 @@
                 <!--  -->
             </div>
             <div class="login">
-                <button><a href="#">로그인</a></button>
+                <button><a href="/user/login">로그인</a></button>
                 <button><a href="#">회원가입</a></button>
             </div>
         </div>
