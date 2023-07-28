@@ -1,88 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/login1.css">
-  <link rel="stylesheet" href="./css/reset.css">
-  <title>수박마켓 로그인</title>
-  <link rel="icon" type="image/png" href="./img/subak.png">
-</head>
-<body>
-  <header>
-    <div class="container">
-      <a href="#">
-        <img src="./img/subakmarket.png" alt="중고 거래부터 동네 정보까지" title="이것은 수박이여 당근이여!">
-      </a>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/user/inc/header::headerFragment"/>
+
+<link rel="stylesheet" th:href="@{/css/login1.css}">
+
+<section class="containers">
+  <div class="test">
+    <div class="main">
+      <h1>수박채팅 로그인</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quo.
+      </p>
     </div>
-  </header>
-  <section class="containers">
-    <div class="test">
-      <div class="main">
-        <h1>수박채팅 로그인</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quo.
-        </p>
-      </div>
-      <div class="sub">
-        <p>
-          수박 채팅 주의사항 1
-        </p>
-        <ol class="list">
-          <li>1. Lorem ipsum, not good dolor sit amet consectetur adipisicing.</li>
-          <li>2. Lorem, ipsum dolor sit amet consectetur, good adipisicing.</li>
-          <li>3. Lorem, ipsum dolor sit holy amet consectetur adipisicing.</li>
-        </ol>
-      </div>
-      <div class="sub">
-        <p>
-          수박 채팅 주의사항 2
-        </p>
-        <ol class="list">
-          <li>1. Lorem, ipsum waka fee dolor sit amet, consectetur adipisicing.</li>
-          <li>2. Lorem, ipsum dolor sit amet consectetur, adipisicing.</li>
-          <li>3. Lorem, ipsum, dolor sit amet consectetur anything adipisicing.</li>
-        </ol>
-      </div>
-      <div class="last">
-        <p>
-          &#149;
-          아직 계정이 없다면 모바일 앱에서 회원가입해주세요. 
-          <a href="">자주 묻는 질문</a>
-        </p>
-      </div>
+    <div class="sub">
+      <p>
+        수박 채팅 주의사항 1
+      </p>
+      <ol class="list">
+        <li>1. Lorem ipsum, not good dolor sit amet consectetur adipisicing.</li>
+        <li>2. Lorem, ipsum dolor sit amet consectetur, good adipisicing.</li>
+        <li>3. Lorem, ipsum dolor sit holy amet consectetur adipisicing.</li>
+      </ol>
     </div>
-    <div class="login-modal">
-      <div class="login">
-        <h1>로그인</h1>
-        <input type="text" placeholder=" 이메일">
-        <input type="password" placeholder=" 비밀번호">
-        <input type="submit" value="로그인">
-        <div class="save-info">
-          <label class="a">
-            <input type="checkbox"> 자동 로그인
-          </label>
-          <label class="b">
-            <input type="checkbox"> 이메일
-            <input type="checkbox"> 비밀번호
-          </label>
-        </div>
+    <div class="sub">
+      <p>
+        수박 채팅 주의사항 2
+      </p>
+      <ol class="list">
+        <li>1. Lorem, ipsum waka fee dolor sit amet, consectetur adipisicing.</li>
+        <li>2. Lorem, ipsum dolor sit amet consectetur, adipisicing.</li>
+        <li>3. Lorem, ipsum, dolor sit amet consectetur anything adipisicing.</li>
+      </ol>
+    </div>
+    <div class="last">
+      <p>
+        &#149;
+        아직 계정이 없다면 모바일 앱에서 회원가입해주세요.
+        <a href="">자주 묻는 질문</a>
+      </p>
+    </div>
+  </div>
+  <div class="login-modal">
+    <div class="login">
+      <h1>로그인</h1>
+      <input type="text" placeholder=" 이메일">
+      <input type="password" placeholder=" 비밀번호">
+      <input type="submit" value="로그인">
+      <div class="save-info">
+        <label class="a">
+          <input type="checkbox"> 자동 로그인
+        </label>
+        <label class="b">
+          <input type="checkbox"> 이메일
+          <input type="checkbox"> 비밀번호
+        </label>
       </div>
     </div>
-  </section>
-  <footer>
-    <div class="finally">
-      <ul class="li">
-        <li><a href="#">이용약관</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">위치기반서비스 이용약관</a></li>
-      </ul>
-      <div class="lastt">
-        <div>© Daangn Market Inc.</div>
-      </div>
-    </div>
-  </footer>
+  </div>
+</section>
+
+<th:block th:replace="/user/inc/footer::footerFragment"/>
+
 </body>
 </html>
