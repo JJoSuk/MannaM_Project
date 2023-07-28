@@ -11,14 +11,15 @@ let userObject = {
         alert("회원 가입 요청!!!");
 
         let user = {
+            id: $("#id").val(),
             username: $("#username").val(),
             password: $("#password").val(),
             email: $("#email").val()
         }
-
+        console.log(user);
         $.ajax({
            type:"post",
-           url:"/auth/register",
+           url:"register",
            data:JSON.stringify(user),
            contentType: "application/json; charset=utf-8"
         }).done(function(response){

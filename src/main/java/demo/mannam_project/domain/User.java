@@ -15,8 +15,7 @@ import java.sql.Timestamp;
 @Table(name="USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // 회원 일련번호
+    private String id; // 회원 일련번호
 
     @Column(nullable = false, length = 50, unique = true)
     private String username; // 아이디
