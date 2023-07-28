@@ -28,10 +28,10 @@ public class LoginController {
     @PostMapping("/auth/login")
     public @ResponseBody ResponseDTO<?> login(@RequestBody User user
             , HttpSession session) {
-        User findUser = userService.getUser(user.getUsername());
+        User findUser = userService.getUser(user.getId());
 
         // 검색결과 유무와 사용자가 입력한 비밀번호 검증
-        if (findUser.getUsername() == null) {
+        if (findUser.getId() == null) {
             return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(),
                     "아이디가 존재하지 않습니다!!");
         } else {

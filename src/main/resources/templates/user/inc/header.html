@@ -97,10 +97,18 @@
                 <button><a href="login1.html">채팅하기</a></button>
                 <!--  -->
             </div>
-            <div class="login">
-                <button><a href="/user/login">로그인</a></button>
-                <button><a href="/user/auth/register">회원가입</a></button>
-            </div>
+            <th:block th:if="${session.principal == null}">
+                <div class="login">
+                    <button><a href="/user/login">로그인</a></button>
+                    <button><a href="/user/auth/register">회원가입</a></button>
+                </div>
+            </th:block>
+
+            <th:block th:if="${session.principal != null}">
+                <div class="login">
+                    <button><a href="/user/logout">로그아웃</a></button>
+                </div>
+            </th:block>
         </div>
     </header>
     <aside>

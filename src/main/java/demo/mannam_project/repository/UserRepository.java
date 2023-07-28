@@ -11,6 +11,6 @@ public interface UserRepository extends JpaRepository<User, Integer > {
 //    엔티티명은 생략가능 : findByUsername
 
     // SELECT * FROM users WHERE username = ?1;
-    Optional<User> findByUsername(String username);
+    Optional<User> findById(String id);
 
 }

@@ -11,10 +11,10 @@ let loginObject = {
         alert("로그인 요청!!!");
 
         let user = {
-            username: $("#username").val(),
+            id: $("#id").val(),
             password: $("#password").val()
         }
-
+        console.log(user);
         $.ajax({
            type:"post",
            url:"/auth/login",
