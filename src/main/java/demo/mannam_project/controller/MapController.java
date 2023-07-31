@@ -76,7 +76,7 @@ public class MapController {
 
     @PostMapping("/map/kakaomapRegister")
     public String saveFormRequests(@ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
-        String repo = "resources/fileRepo";
+        String repo = "resources/fileRepo/";
 
         String markname = itemRequest.getMarkname();
         String markaddress = itemRequest.getMarkaddress();
@@ -98,7 +98,7 @@ public class MapController {
         if (itemRequest.getFile() != null) {
             MultipartFile file = itemRequest.getFile();
             String fullPath = request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename();
-
+            System.out.println(fullPath);
             file.transferTo(new File(fullPath));
 //            log.info("file.getOriginalFilename = {}", file.getOriginalFilename());
 //            log.info("fullPath = {}", fullPath);
@@ -136,6 +136,7 @@ public class MapController {
         model.addAttribute("list",list);
 
 
+//        return "user/map/kakaomarkmap";
         return "user/map/kakaomarkmap";
     }
 }

@@ -3,66 +3,117 @@
 <!--  헤더  -->
 <th:block th:replace="/user/inc/header::headerFragment"/>
 
-<div id="map" style="width:100%;height:70vh;padding-top: 64px;"></div>
-
+<div id="map" style="width:100%;height:70vh;padding-top: 64px;padding-left: 16px;"></div>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=67e976d6b999592753b7dacf13bb3bed&libraries=services"></script>
 <script th:inline="javascript">
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-    mapOption = {
-        center: new kakao.maps.LatLng(37.552758094502494, 126.98732600494576), // 지도의 중심좌표
-        level: 9 // 지도의 확대 레벨
-    };
+    // 카카오맵 API 초기화
+    kakao.maps.load(() => {
+        const mapContainer = document.getElementById('map');
+        const mapOptions = {
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청 좌표
+            level: 8,
+        };
+        const map = new kakao.maps.Map(mapContainer, mapOptions);
 
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        // 마커를 표시할 위치와 title 객체 배열입니다
+        var arr = [[${list}]];
+        console.log(arr);
 
-// 마커를 표시할 위치와 title 객체 배열입니다
- var arr = [[${list}]];
-      console.log(arr);
+        var positions = new Array();
+        for (var k in arr) {
+            var $obj = arr[k];
+            console.log($obj);
 
-      var positions = new Array();
-      for(var k in arr){
-          var $obj = arr[k];
-          console.log($obj);
+            var title = $obj.markname;
+            console.log(title);
+            var lat = $obj.latitude;
+            console.log(lat);
+            var lng = $obj.longitude;
+            console.log(lng);
+            positions.push(title, lat, lng);
+        }
 
-          var title =  $obj.markname;
-          console.log(title);
-          var lat  =  $obj.latitude;
-          console.log(lat);
-          var lng  =  $obj.longitude;
-          console.log(lng);
-          positions.push(title,lat,lng);
+        // 현재 열린 오버레이를 저장할 변수
+        let currentOverlay = null;
 
-      }
+        // 마커 이미지의 이미지 주소입니다
+        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-console.log(positions);
+        // 마커 생성 및 이벤트 등록
+        for (var i = 0; i < positions.length / 3; i++) {
+            // 마커 이미지의 이미지 크기 입니다
+            var imageSize = new kakao.maps.Size(24, 35);
 
+            // 마커 이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-// 마커 이미지의 이미지 주소입니다
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: new kakao.maps.LatLng(positions[i * 3 + 2], positions[i * 3 + 1]), // 마커를 표시할 위치
+                title: positions[i * 3], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                image: markerImage // 마커 이미지
+            });
 
-for (var i = 0; i < positions.length/3; i ++) {
+            // 커스텀 오버레이에 표시할 컨텐츠 입니다
+            // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+            // 별도의 이벤트 메소드를 제공하지 않습니다
+            var content = '<div class="wrap">' +
+                '    <div class="info">' +
+                '        <div class="title">' +
+                '            ' + positions[i * 3] + '' +
+                '            <a class="btn btn-success" style=" margin-bottom: 8px;" type="button" href="/kakaomap">' + '변경' + '</a>' +
+                '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+                '        </div>' +
+                '        <div class="body">' +
+                '            <div class="img">' +
+                '                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
+                '           </div>' +
+                '            <div class="desc">' +
+                '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
+                '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
+                '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
+                '</div>';
 
-    // 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35);
+            // 커스텀 오버레이 생성 및 이벤트 등록
+            const customOverlay = new kakao.maps.CustomOverlay({
+                content: content,
+                position: marker.getPosition(),
+                zIndex: 99999 // 오버레이를 최상위로 표시
+            });
 
-    // 마커 이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            kakao.maps.event.addListener(marker, 'click', function () {
+                // 기존에 열린 오버레이가 있으면 닫기
+                if (currentOverlay !== null) {
+                    currentOverlay.setMap(null);
+                }
 
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도
-        position: new kakao.maps.LatLng(positions[i*3+2],positions[i*3+1]), // 마커를 표시할 위치
-        title : positions[i*3], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage // 마커 이미지
+                customOverlay.setMap(map);
+                currentOverlay = customOverlay;
+            });
+        }
+
+        // 커스텀 오버레이 닫는 함수
+        function closeOverlay() {
+            if (currentOverlay !== null) {
+                currentOverlay.setMap(null);
+                currentOverlay = null;
+            }
+        }
+
+        // 오버레이 외부 클릭 이벤트 처리
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+            var customOverlayElem = currentOverlay ? currentOverlay.getContent() : null;
+            if (customOverlayElem && !customOverlayElem.contains(mouseEvent.target)) {
+                closeOverlay();
+            }
+        });
     });
-}
 </script>
 
-
-<th:block th:replace="/user/inc/footer::footerFragment"/>
-
+<!-- 푸터 -->
+<th:block th:replace="/user/inc/footer::footerFragment" />
 </html>
-
-
-
-
-
