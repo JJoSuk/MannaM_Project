@@ -1,0 +1,168 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="/user/inc/header::headerFragment"/>
+
+<div class="content mt-5 p-5">
+    <article>
+        <div class="container mt-5 mb-5">
+            <div hidden th:text="${board.id}"></div>
+            <div class="d-flex">
+                <div class="pt-2" style="width: 62px;">제목</div>
+                <div class="w-100 mr-2">
+                    <div type="text" class="form-control" name="boardTitle" th:text="${board.boardTitle}"></div>
+                </div>
+                <div class="pt-2" style="width: 60px; margin-left: 10px">조회수</div>
+                <div class="pt-2">
+                    <div name="boardHits" th:text="${board.boardHits}" readonly
+                         style="background-color: #ffffff"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                <div class="" style="width: 60px;">작성자</div>
+                <div class="">
+                    <div name="boardWriter" th:text="${board.boardWriter}" readonly
+                         style="background-color: #ffffff"></div>
+                </div>
+                </div>
+                <div class="d-flex">
+                <div class="" style="width: 60px;">날짜</div>
+                <div class="">
+                    <div name="boardCreatedTime" th:text="${board.boardCreatedTime}" readonly
+                         style="background-color: #ffffff"></div>
+                </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="form-control min-vh-100 p-5" name="boardContents" th:utext="${board.boardContents}"></div>
+                <br>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success m-1" onclick="listReq()">목록</button>
+                <button class="btn btn-primary m-1" onclick="updateReq()">수정</button>
+                <button class="btn btn-danger m-1" onclick="deleteReq()">삭제</button>
+            </div>
+            <hr>
+            <br>
+
+            <!--댓글 작성 부분-->
+            <div class=" d-flex mt-3 mb-3" id="comment-write">
+                <input class="" type="text" id="commentWriter" placeholder="작성자" style="width: 100px;">
+                <input class="w-100" type="text" id="commentContents" placeholder="내용" style="margin: 0px 20px;">
+                <button class="btn btn-primary btn-sm" id="comment-write-btn" onclick="commentWriter()" style="width: 100px;">댓글작성</button>
+            </div>
+
+            <!--댓글 출력 부분-->
+            <div id="comment-list">
+                <table class="table">
+                    <colgroup>
+<!--                        <col width="5%"/>-->
+                        <col width="5%"/>
+                        <col width="20%"/>
+                        <col width="5%"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <!--          <th>-->
+                        <!--            <label class="checkbox-inline">-->
+                        <!--              <input type="checkbox" id="allCheckBox" class="chk">-->
+                        <!--            </label>-->
+                        <!--          </th>-->
+<!--                        <th>번호</th>-->
+                        <th>작성자</th>
+                        <th></th>
+                        <th>작성시간</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="border bg-light">
+                    <tr th:each="comment: ${commentList}">
+                        <!--          <td>-->
+                        <!--            <label class="checkbox-inline">-->
+                        <!--              <input type="checkbox" class="chk" name="chk" value="">-->
+                        <!--            </label>-->
+                        <!--          </td>-->
+                        <td hidden th:text="${comment.id}"></td>
+                        <td th:text="${comment.commentWriter}"></td>
+                        <td th:text="${comment.commentContents}"></td>
+                        <td th:text="${comment.commentCreatedTime}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</div>
+<script th:inline="javascript">
+    const commentWriter = () => {
+        const writer = document.getElementById("commentWriter").value;
+        const contents = document.getElementById("commentContents").value;
+        console.log("작성자 : ", writer);
+        console.log("내용 : ", contents);
+        const id = [[${board.id}]]; // 게시글 번호
+
+        $.ajax({
+            // 요청방식 : post, 요청주소 : /comment/save, 요청데이터 : 작성자, 작성내용, 게시글번호
+            type: "post",
+            url: "/comment/save",
+            data: {
+                "commentWriter": writer,
+                "commentContents": contents,
+                "boardId": id
+            },
+            success: function (res) {
+                console.log("요청성공", res);
+                let output = "<table class='table'>";
+                    output += "<colgroup>";
+                    output += "<col width='5%'/>";
+                    output += "<col width='20%'/>";
+                    output += "<col width='5%'/>";
+                    output += "</colgroup>";
+                    output += "<thead>";
+                    output += "<tr>";
+                    output += "<th>작성자</th>";
+                    output += "<th></th>";
+                    output += "<th>작성시간</th>";
+                    output += "</tr>";
+                    output += "</thead>";
+                    output += "<tbody class='border bg-light'>";
+                for (let i in res) {
+                    output += "<tr>";
+                    output += "<td hidden>" + res[i].id + "</td>";
+                    output += "<td>" + res[i].commentWriter + "</td>";
+                    output += "<td>" + res[i].commentContents + "</td>";
+                    output += "<td>" + res[i].commentCreatedTime + "</td>";
+                    output += "</tr>";
+                }
+                output += "</tbody>";
+                output += "</table>";
+                document.getElementById('comment-list').innerHTML = output;
+                document.getElementById('commentWriter').value = '';
+                document.getElementById('commentContents').value = '';
+            },
+            error: function (err) {
+                console.log("요청실패", err);
+            }
+        });
+    }
+    const listReq = () => {
+        console.log("목록 요청");
+        const page = [[${page}]];
+        location.href = "/board/paging?page=" + page;
+    }
+    const updateReq = () => {
+        console.log("수정 요청");
+        const id = [[${board.id}]];
+        location.href = "/board/update/" + id;
+    }
+    const deleteReq = () => {
+        console.log("삭제 요청");
+        const id = [[${board.id}]];
+        location.href = "/board/delete/" + id;
+    }
+</script>
+<!-- 푸터 -->
+<th:block th:replace="/user/inc/footer::footerFragment"/>
+</body>
+</html>
