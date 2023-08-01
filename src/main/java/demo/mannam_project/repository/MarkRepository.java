@@ -10,4 +10,6 @@ public interface MarkRepository extends JpaRepository<Mark, Long > {
 
     Optional<Mark> findByMarkname(String markname);
 
+    Mark findByMid(Long mid);
+
 }

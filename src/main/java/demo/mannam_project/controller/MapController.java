@@ -80,7 +80,7 @@ public class MapController {
     @PostMapping("/map/kakaomapRegister")
     public String saveFormRequests(@ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
 
-        String repo = "resources/fileRepo";
+
 
         String markname = itemRequest.getMarkname();
         String markaddress = itemRequest.getMarkaddress();
@@ -101,13 +101,9 @@ public class MapController {
 
         if (itemRequest.getFile() != null) {
             MultipartFile file = itemRequest.getFile();
-            String fullPath = request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename();
-//            String fullPath = resourceLoader.getClassLoader().getResource(File.separator+repo +file.getOriginalFilename());
+//            String fullPath = request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename();
+            String fullPath = "C:/markimage/" + file.getOriginalFilename();
 
-
-
-            System.out.println(request.getServletContext());
-            System.out.println(request.getServletContext().getRealPath(""));
             System.out.println(fullPath);
             file.transferTo(new File(fullPath));
 
@@ -116,10 +112,18 @@ public class MapController {
 
             FileDTO fileDto = FileDTO.builder()
                     .originFileName(file.getOriginalFilename())
-                    .fullPath(request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename())
+//                    .fullPath(request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename())
+                    .fullPath("C:/markimage/" + file.getOriginalFilename())
                     .build();
             String savedMarkimage = fileService.save(fileDto);
             markDTO.setMarkimage(savedMarkimage);
+
+            System.out.println("markDTO"+markDTO);
+
+            String savedMarkimagepath = fileService.save2(fileDto);
+            markDTO.setMarkimagepath(savedMarkimagepath);
+
+            System.out.println("markDTO2"+markDTO);
         }
 
         markService.save(markDTO);
@@ -148,13 +152,14 @@ public class MapController {
 
 
 //        return "user/map/kakaomarkmap";
-        return "user/map/kakaomarkmap2";
+        return "user/map/kakaomarkmap";
     }
 
     @GetMapping("/markupdate/{mid}")
-    public String markupdate(@PathVariable int mid, Model model){
+    public String markupdate(@PathVariable Long mid, Model model){
 
-//        model.addAttribute("post", markService.getMark(mid));
+        model.addAttribute("list", markService.getMark2(mid));
+
 
         return "user/map/markupdate";
     }

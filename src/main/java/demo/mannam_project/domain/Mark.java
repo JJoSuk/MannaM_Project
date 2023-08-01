@@ -23,6 +23,8 @@ public class Mark {
 
 	private String markimage;
 
+	private String markimagepath;
+
 	@Column(nullable = false, length = 100)
 	private String markaddress;
 
@@ -43,7 +45,7 @@ public class Mark {
 
 
 	@Builder
-	public Mark(String markname, String markaddress, String markainfo, String category, String tel, String latitude, String longitude, String markimage) {
+	public Mark(String markname, String markaddress, String markainfo, String category, String tel, String latitude, String longitude, String markimage,String markimagepath) {
 		this.markname = markname;
 		this.markaddress = markaddress;
 		this.markainfo = markainfo;
@@ -52,6 +54,7 @@ public class Mark {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.markimage = markimage;
+		this.markimagepath = markimagepath;
 
 	}
 
