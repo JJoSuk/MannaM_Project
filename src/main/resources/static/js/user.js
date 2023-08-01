@@ -24,7 +24,7 @@ let userObject = {
            contentType: "application/json; charset=utf-8"
         }).done(function(response){
             console.log(response);
-            // location = "/";
+            location = "/";
         }).fail(function(error){
             alert("에러 발생 : " + error);
         });

@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MannaMWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(
-                new AuthenticationInterceptor()
-        ).addPathPatterns("/");
+        registry.addInterceptor(new AuthenticationInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/auth/register")
+                .excludePathPatterns("/css/*", "/js/*", "/img/*", "/*.ico", "/error");
     }
 }

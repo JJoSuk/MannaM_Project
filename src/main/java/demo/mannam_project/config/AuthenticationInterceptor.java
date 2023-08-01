@@ -16,7 +16,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         User principal = (User)session.getAttribute("principal");
 
         if (principal == null){
-            response.sendRedirect("user/login");
+            response.sendRedirect("/user/login");
         }
 
         return true;

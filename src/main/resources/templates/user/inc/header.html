@@ -112,7 +112,7 @@
                 <input placeholder="물품이나 동네를 검색해보세요">
                 <i class="xi-search"></i>
                 <!--  -->
-                <button><a href="login1.html">채팅하기</a></button>
+                <button><a href="#">채팅하기</a></button>
                 <!--  -->
             </div>
             <th:block th:if="${session.principal == null}">
@@ -124,7 +124,7 @@
 
             <th:block th:if="${session.principal != null}">
                 <div class="login">
-                    <button><a href="/user/logout">로그아웃</a></button>
+                    <button><a href="/auth/logout">로그아웃</a></button>
                 </div>
             </th:block>
         </div>
@@ -133,7 +133,7 @@
         <nav>
             <ul>
                 <li class="edit"><a href="">편집</a></li>
-                <li><h3>즐겨찾기</h3></li>
+                <li><h5>즐겨찾기</h5></li>
             </ul>
             <hr>
             <ul>

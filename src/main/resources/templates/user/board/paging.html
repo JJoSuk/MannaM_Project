@@ -10,7 +10,6 @@
             <a class="btn btn-primary" onclick="saveReq()">글쓰기</a>
         </div>
         <br>
-        <form>
             <table class="table table-hover">
                 <colgroup>
                     <!--          <col width="2%" />-->
@@ -92,7 +91,6 @@
                     </li>
                 </ul>
             </nav>
-        </form>
         <br>
         <div class="input-group d-flex justify-content-center">
             <input type="text" class="form-control" placeholder="제목을 입력해주세요.">
@@ -104,10 +102,6 @@
 <script>
     const saveReq = () => {
         location.href = "/board/save";
-    }
-
-    const joinReq = () => {
-        location.href = "/user/join";
     }
 
 </script>

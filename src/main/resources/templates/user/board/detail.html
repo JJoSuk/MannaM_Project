@@ -48,7 +48,7 @@
 
             <!--댓글 작성 부분-->
             <div class=" d-flex mt-3 mb-3" id="comment-write">
-                <input class="" type="text" id="commentWriter" placeholder="작성자" style="width: 100px;">
+                <input class="" type="text" id="commentWriter" placeholder="작성자" style="width: 100px;" th:value="${session.principal.username}" readonly>
                 <input class="w-100" type="text" id="commentContents" placeholder="내용" style="margin: 0px 20px;">
                 <button class="btn btn-primary btn-sm" id="comment-write-btn" onclick="commentWriter()" style="width: 100px;">댓글작성</button>
             </div>
