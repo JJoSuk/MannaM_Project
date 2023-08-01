@@ -8,12 +8,11 @@ import demo.mannam_project.service.MarkService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +23,10 @@ import java.util.List;
 
 @Controller
 public class MapController {
+
+    @Autowired
+    ResourceLoader resourceLoader;
+
 
     @Autowired
     MarkService markService;
@@ -76,7 +79,8 @@ public class MapController {
 
     @PostMapping("/map/kakaomapRegister")
     public String saveFormRequests(@ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
-        String repo = "resources/fileRepo/";
+
+        String repo = "static/markimage/";
 
         String markname = itemRequest.getMarkname();
         String markaddress = itemRequest.getMarkaddress();
@@ -98,8 +102,15 @@ public class MapController {
         if (itemRequest.getFile() != null) {
             MultipartFile file = itemRequest.getFile();
             String fullPath = request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename();
+//            String fullPath = resourceLoader.getClassLoader().getResource(File.separator+repo +file.getOriginalFilename());
+
+
+
+            System.out.println(request.getServletContext());
+            System.out.println(request.getServletContext().getRealPath(""));
             System.out.println(fullPath);
             file.transferTo(new File(fullPath));
+
 //            log.info("file.getOriginalFilename = {}", file.getOriginalFilename());
 //            log.info("fullPath = {}", fullPath);
 
@@ -137,6 +148,14 @@ public class MapController {
 
 
 //        return "user/map/kakaomarkmap";
-        return "user/map/kakaomarkmap";
+        return "user/map/kakaomarkmap2";
+    }
+
+    @GetMapping("/markupdate/{mid}")
+    public String markupdate(@PathVariable int mid, Model model){
+
+//        model.addAttribute("post", markService.getMark(mid));
+
+        return "user/map/markupdate";
     }
 }
