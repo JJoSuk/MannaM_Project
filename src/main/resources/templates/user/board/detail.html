@@ -40,8 +40,10 @@
             </div>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-success m-1" onclick="listReq()">목록</button>
-                <button class="btn btn-primary m-1" onclick="updateReq()">수정</button>
-                <button class="btn btn-danger m-1" onclick="deleteReq()">삭제</button>
+                <span th:if="${session.principal.id != null && session.principal.id == board.user.id}">
+                    <button class="btn btn-primary m-1" onclick="updateReq()">수정</button>
+                    <button class="btn btn-danger m-1" onclick="deleteReq()">삭제</button>
+                </span>
             </div>
             <hr>
             <br>
@@ -60,7 +62,8 @@
 <!--                        <col width="5%"/>-->
                         <col width="5%"/>
                         <col width="20%"/>
-                        <col width="5%"/>
+                        <col width="3%"/>
+                        <col width="3%"/>
                     </colgroup>
                     <thead>
                     <tr>
@@ -73,6 +76,7 @@
                         <th>작성자</th>
                         <th></th>
                         <th>작성시간</th>
+                        <th></th>
                     </tr>
                     </thead>
 
@@ -87,6 +91,11 @@
                         <td th:text="${comment.commentWriter}"></td>
                         <td th:text="${comment.commentContents}"></td>
                         <td th:text="${comment.commentCreatedTime}"></td>
+                        <td th:if='${comment.commentWriter == session.principal.username}'>
+                            <a href=''>수정</a> /
+                            <a href=''>삭제</a>
+                        </td>
+                        <td th:unless='${comment.commentWriter == session.principal.username}'></td>
                     </tr>
                     </tbody>
                 </table>
@@ -117,13 +126,15 @@
                     output += "<colgroup>";
                     output += "<col width='5%'/>";
                     output += "<col width='20%'/>";
-                    output += "<col width='5%'/>";
+                    output += "<col width='3%'/>";
+                    output += "<col width='3%'/>";
                     output += "</colgroup>";
                     output += "<thead>";
                     output += "<tr>";
                     output += "<th>작성자</th>";
                     output += "<th></th>";
                     output += "<th>작성시간</th>";
+                    output += "<th></th>";
                     output += "</tr>";
                     output += "</thead>";
                     output += "<tbody class='border bg-light'>";
@@ -133,12 +144,17 @@
                     output += "<td>" + res[i].commentWriter + "</td>";
                     output += "<td>" + res[i].commentContents + "</td>";
                     output += "<td>" + res[i].commentCreatedTime + "</td>";
+                    output += "<td th:if='${comment.commentWriter == session.principal.username}'>";
+                    output += "<a href=''>수정</a> /";
+                    output += "<a href=''>삭제</a>";
+                    output += "</td>";
+                    output += "<td th:unless='${comment.commentWriter == session.principal.username}'></td>";
                     output += "</tr>";
                 }
                 output += "</tbody>";
                 output += "</table>";
                 document.getElementById('comment-list').innerHTML = output;
-                document.getElementById('commentWriter').value = '';
+                // document.getElementById('commentWriter').value = '';
                 document.getElementById('commentContents').value = '';
             },
             error: function (err) {

@@ -26,7 +26,7 @@ public class ImageService {
 
     public ImageService(String uploadPath) {
         this.rootLocation = Paths.get(uploadPath);
-        System.out.println(rootLocation.toString());
+//        System.out.println(rootLocation.toString());
     }
 
     public UploadFile store(MultipartFile file) throws Exception {
