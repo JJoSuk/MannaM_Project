@@ -93,7 +93,13 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, @PageableDefault(page=1) Pageable pageable, Model model) {
+    public String update(@ModelAttribute BoardDTO boardDTO,
+                         @PageableDefault(page=1) Pageable pageable,
+                         Model model,
+                         HttpSession session) {
+        User user = (User) session.getAttribute("principal");
+        boardDTO.setUser(user);
+
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
         model.addAttribute("page", pageable.getPageNumber());
