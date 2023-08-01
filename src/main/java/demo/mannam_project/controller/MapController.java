@@ -80,7 +80,7 @@ public class MapController {
     @PostMapping("/map/kakaomapRegister")
     public String saveFormRequests(@ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
 
-        String repo = "static/markimage/";
+        String repo = "resources/fileRepo";
 
         String markname = itemRequest.getMarkname();
         String markaddress = itemRequest.getMarkaddress();
