@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
         private Long mid;
         private String markname;
         private String markimage;
+        private String markimagepath;
         private String markaddress;
         private String markainfo;
         private String category;
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 
                     .markname(this.markname)
                     .markimage(this.markimage)
+                    .markimagepath(this.markimagepath)
                     .markaddress(this.markaddress)
                     .markainfo(this.markainfo)
                     .category(this.category)
@@ -33,9 +35,10 @@ import lombok.NoArgsConstructor;
         }
 
         @Builder
-        public MarkDTO(String markname, String markimage, String markaddress, String markainfo, String category, String tel, String latitude, String longitude) {
+        public MarkDTO(String markname, String markimage,String markimagepath, String markaddress, String markainfo, String category, String tel, String latitude, String longitude) {
             this.markname = markname;
             this.markimage = markimage;
+            this.markimagepath = markimagepath;
             this.markaddress = markaddress;
             this.markainfo = markainfo;
             this.category = category;

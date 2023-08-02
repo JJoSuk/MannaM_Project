@@ -18,4 +18,8 @@ public class FileService {
         return fileRepository.save(fileDto.toEntity()).getOriginFileName();
     }
 
+
+    public String save2(FileDTO fileDto) {
+        return fileRepository.save(fileDto.toEntity()).getFullPath();
+    }
 }
