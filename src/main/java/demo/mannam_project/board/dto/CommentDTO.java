@@ -20,6 +20,7 @@ public class CommentDTO {
     private Long boardId;
     private LocalDateTime commentCreatedTime;
     private BoardEntity boardEntity;
+    private String userId;
 
 //    @Builder
 //    public CommentDTO(Long id, String commentWriter, String commentContents, CommentEntity commentEntity){
@@ -38,6 +39,7 @@ public class CommentDTO {
 //                .boardEntity(boardEntity)
 //                .build();
 //    }
+
     public static CommentDTO toCommentDTO(CommentEntity commentEntity, Long boardId) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(commentEntity.getId());
@@ -46,6 +48,7 @@ public class CommentDTO {
         commentDTO.setCommentCreatedTime(commentEntity.getCreatedTime());
 //        commentDTO.setBoardId(commentEntity.getBoardEntity().getId()); // 이 경우 Service 메소드에 @Transactional
         commentDTO.setBoardId(boardId);
+        commentDTO.setUserId(commentEntity.getUser().getId());
         return commentDTO;
     }
 }

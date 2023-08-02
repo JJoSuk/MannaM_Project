@@ -7,7 +7,7 @@
         <!-- ADMIN 권한일경우에만 글삭제 권한있음 -->
         <div class="d-flex justify-content-end">
             <!--        <a class="btn btn-danger">글삭제</a>-->
-            <a class="btn btn-primary" onclick="saveReq()">글쓰기</a>
+            <a class="btn btn-primary" href="/board/save">글쓰기</a>
         </div>
         <br>
             <table class="table table-hover">
@@ -73,7 +73,7 @@
                         <li class="page-item disabled">
                             <span class="page-link" th:if="${page == boardList.number + 1}" th:text="${page}"></span>
                         </li>
-                        <span th:if="${boardList.getNumber() != 0}">
+                        <span th:unless="${boardList.isEmpty()}">
                             <li class="page-item" th:unless="${page == boardList.number + 1}">
                                 <a class="page-link" th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
                             </li>
@@ -99,12 +99,6 @@
         <br>
     </nav>
 </div>
-<script>
-    const saveReq = () => {
-        location.href = "/board/save";
-    }
-
-</script>
 <!-- 푸터 -->
 <th:block th:replace="/user/inc/footer::footerFragment"/>
 </body>
