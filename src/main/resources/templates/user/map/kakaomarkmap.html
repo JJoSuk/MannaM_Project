@@ -65,7 +65,7 @@ function createCustomOverlayContent(positions) {
 
     var changeButton = document.createElement('a');
     changeButton.className = 'btn btn-success';
-    changeButton.style.marginBottom = '8px';
+<!--    changeButton.style.margin: 0 auto;-->
     changeButton.type = 'button';
     changeButton.href = '/markupdate/'+positions.mid;
     changeButton.textContent = '변경';
@@ -85,7 +85,7 @@ function createCustomOverlayContent(positions) {
 
     var img = document.createElement('img');
 <!--    img.src = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png';-->
-    img.src = positions.imagepath;
+    img.src = '/upload/'+positions.image;
     img.width = 73;
     img.height = 70;
     imgDiv.appendChild(img);

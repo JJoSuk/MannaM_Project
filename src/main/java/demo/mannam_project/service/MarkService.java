@@ -57,4 +57,6 @@ public class MarkService {
     public Long save(MarkDTO markDTO) {
         return markRepository.save(markDTO.toEntity()).getMid();
     }
+
+
 }

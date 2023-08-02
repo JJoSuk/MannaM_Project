@@ -7,26 +7,14 @@
 <!--  컨텐츠 영역  -->
 <div class="container w-50 mt-3" style="height:70vh;padding-top: 64px;padding-left: 16px;">
   <h3>마커 수정</h3>
-  <form action="/map/kakaomapRegister" method="post" enctype="multipart/form-data">
+  <form action="/markupdate" method="post">
 <!--  <form class="form-join" method="post">-->
+    <p><input class="form-control" type="text" id="mid" name="mid" th:value="${list.mid}" ></p>
     <p><input class="form-control" type="text" id="markname" name="markname" th:value="${list.markname}" ></p>
-    <p><input class="form-control" type="text" id="latitude" name="latitude" th:value="${list.latitude}" ></p>
-    <p><input class="form-control" type="text" id="longitude" name="longitude" th:value="${list.longitude}" ></p>
-    <p><select class="form-select" id="category" name="category" th:value="${list.category}" >
-      <option value="카페" >카페</option>
-      <option value="병원" >병원</option>
-      <option value="흡연장" >흡연장</option>
-      <option value="주차장" >주차장</option>
-      <option value="편의점" >편의점</option>
-    </select></p>
-    <p><input class="form-control" type="file" id="file" name="file" placeholder="마커 이미지" onchange="preViewImg(this)" th:value="${list.markimage}" /><img/></p>
-    <p><input class="form-control" type="text" id="markainfo" name="markainfo" placeholder="마커 설명" th:value="${list.markainfo}"  ></p>
-    <p><input class="form-control" type="text" id="tel" name="tel" placeholder="전화번호" th:value="${list.tel}"></p>
-    <p><input class="form-control" type="text" id="markaddress" name="markaddress" placeholder="마커 주소" th:value="${list.markaddress}"></p>
-<!--    <p><input class="btn btn-markRegister" type="submit" value="마크등록"></p>-->
-    <button type="submit"  class="btn btn-success btn-lg">마크수정</button>
+<!--    <p><input class="form-control" type="file" id="file" name="file" placeholder="마커 이미지" onchange="preViewImg(this)" th:value="${list.markimage}" /><img/></p>-->
+    <button type="submit"  class="btn btn-success btn-lg">수정</button>
+    <button href="/kakaomarkmap"  class="btn btn-secondary btn-lg">돌아가기</button>
   </form>
-
 
 </div>
 <!--<script src="/js/mark.js"></script>-->

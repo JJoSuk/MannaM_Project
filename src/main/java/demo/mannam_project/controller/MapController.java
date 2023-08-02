@@ -3,21 +3,30 @@ package demo.mannam_project.controller;
 import demo.mannam_project.domain.FileDTO;
 import demo.mannam_project.domain.Mark;
 import demo.mannam_project.domain.MarkDTO;
+import demo.mannam_project.dto.ResponseDTO;
+import demo.mannam_project.repository.MarkRepository;
 import demo.mannam_project.service.FileService;
 import demo.mannam_project.service.MarkService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +39,9 @@ public class MapController {
 
     @Autowired
     MarkService markService;
+
+    @Autowired
+    MarkRepository markRepository;
 
     @Autowired
     FileService fileService;
@@ -102,7 +114,15 @@ public class MapController {
         if (itemRequest.getFile() != null) {
             MultipartFile file = itemRequest.getFile();
 //            String fullPath = request.getServletContext().getRealPath("")+ File.separator+repo + file.getOriginalFilename();
+//            Resource resource = resourceLoader.getResource("classpath:markimage/txt.html");
+//            System.out.println(resource.exists());
+//            System.out.println(resource.getURL());
+//            System.out.println(resource.getURI().getPath());
             String fullPath = "C:/markimage/" + file.getOriginalFilename();
+
+            ClassPathResource resource = new ClassPathResource("static/markimage/");
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            System.out.println(br);
 
             System.out.println(fullPath);
             file.transferTo(new File(fullPath));
@@ -126,7 +146,7 @@ public class MapController {
             System.out.println("markDTO2"+markDTO);
         }
 
-        markService.save(markDTO);
+//        markService.save(markDTO);
 
         return "user/map/kakaomapmain";
     }
@@ -162,5 +182,19 @@ public class MapController {
 
 
         return "user/map/markupdate";
+    }
+
+    // 마커 수정
+    @PostMapping("/markupdate")
+    public String updatePost( String markname, int mid, @ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
+
+        List<Mark> marks = markRepository.findAll();
+
+
+        marks.get(mid-1).setMarkname(markname);
+        markRepository.save(marks.get(mid-1)); // Update
+
+
+        return "redirect:/kakaomarkmap";
     }
 }
