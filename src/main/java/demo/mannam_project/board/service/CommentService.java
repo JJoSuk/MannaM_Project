@@ -53,4 +53,15 @@ public class CommentService {
         }
         return commentDTOList;
     }
+
+    // 댓글 기본키로 게시글 기본키 찾기
+//    public Long findBoardIdByCommentId(Long commentId){
+//        return boardRepository.findBoardIdByCommnetId(commentId);
+//    }
+
+    // 댓글 삭제
+//    @Transactional
+//    public void delete(Long id) {
+//        commentRepository.deleteById(id);
+//    }
 }
