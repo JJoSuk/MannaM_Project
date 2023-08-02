@@ -53,16 +53,16 @@ public class BoardDTO {
     }
 
 
-    public BoardEntity toUpdateEntity() {
-        return BoardEntity.builder()
-                .id(id)
-                .boardWriter(boardWriter)
-                .boardTitle(boardTitle)
-                .boardContents(boardContents)
-                .boardHits(boardHits)
-                .user(user)
-                .build();
-    }
+//    public BoardEntity toUpdateEntity() {
+//        return BoardEntity.builder()
+//                .id(id)
+//                .boardWriter(boardWriter)
+//                .boardTitle(boardTitle)
+//                .boardContents(boardContents)
+//                .boardHits(boardHits)
+//                .user(user)
+//                .build();
+//    }
 
 //    public BoardDTO(Long id, String boardWriter, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
 //        this.id = id;

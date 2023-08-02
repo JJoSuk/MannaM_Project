@@ -50,11 +50,12 @@ public class CommentEntity extends BaseEntity{
 //                .commentEntity(this)
 //                .build();
 //    }
-    public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity) {
+    public static CommentEntity toSaveEntity(CommentDTO commentDTO, BoardEntity boardEntity, User user) {
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setCommentWriter(commentDTO.getCommentWriter());
         commentEntity.setCommentContents(commentDTO.getCommentContents());
         commentEntity.setBoardEntity(boardEntity);
+        commentEntity.setUser(user);
         return commentEntity;
     }
 }

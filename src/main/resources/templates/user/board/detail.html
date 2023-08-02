@@ -28,7 +28,7 @@
                 <div class="d-flex">
                 <div class="" style="width: 60px;">날짜</div>
                 <div class="">
-                    <div name="boardCreatedTime" th:text="${board.boardCreatedTime}" readonly
+                    <div name="boardCreatedTime" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}" readonly
                          style="background-color: #ffffff"></div>
                 </div>
                 </div>
@@ -62,7 +62,7 @@
 <!--                        <col width="5%"/>-->
                         <col width="5%"/>
                         <col width="20%"/>
-                        <col width="3%"/>
+                        <col width="4%"/>
                         <col width="3%"/>
                     </colgroup>
                     <thead>
@@ -90,12 +90,12 @@
                         <td hidden th:text="${comment.id}"></td>
                         <td th:text="${comment.commentWriter}"></td>
                         <td th:text="${comment.commentContents}"></td>
-                        <td th:text="${comment.commentCreatedTime}"></td>
-                        <td th:if='${comment.commentWriter == session.principal.username}'>
+                        <td th:text="*{#temporals.format(comment.commentCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td th:if='${comment.userId == session.principal.id}'>
                             <a href=''>수정</a> /
                             <a href=''>삭제</a>
                         </td>
-                        <td th:unless='${comment.commentWriter == session.principal.username}'></td>
+                        <td th:unless='${comment.userId == session.principal.id}'></td>
                     </tr>
                     </tbody>
                 </table>
@@ -103,13 +103,17 @@
         </div>
     </article>
 </div>
+<!-- moment : json 타입 Date 포맷 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script th:inline="javascript">
     const commentWriter = () => {
         const writer = document.getElementById("commentWriter").value;
         const contents = document.getElementById("commentContents").value;
         console.log("작성자 : ", writer);
         console.log("내용 : ", contents);
-        const id = [[${board.id}]]; // 게시글 번호
+        const board_id = [[${board.id}]]; // 게시글 번호
+        const user_id = [[${session.principal.id}]];
+        let session_id = [[${session.principal.id}]];
 
         $.ajax({
             // 요청방식 : post, 요청주소 : /comment/save, 요청데이터 : 작성자, 작성내용, 게시글번호
@@ -118,7 +122,8 @@
             data: {
                 "commentWriter": writer,
                 "commentContents": contents,
-                "boardId": id
+                "boardId": board_id,
+                "userId": user_id
             },
             success: function (res) {
                 console.log("요청성공", res);
@@ -126,7 +131,7 @@
                     output += "<colgroup>";
                     output += "<col width='5%'/>";
                     output += "<col width='20%'/>";
-                    output += "<col width='3%'/>";
+                    output += "<col width='4%'/>";
                     output += "<col width='3%'/>";
                     output += "</colgroup>";
                     output += "<thead>";
@@ -143,13 +148,16 @@
                     output += "<td hidden>" + res[i].id + "</td>";
                     output += "<td>" + res[i].commentWriter + "</td>";
                     output += "<td>" + res[i].commentContents + "</td>";
-                    output += "<td>" + res[i].commentCreatedTime + "</td>";
-                    output += "<td th:if='${comment.commentWriter == session.principal.username}'>";
-                    output += "<a href=''>수정</a> /";
-                    output += "<a href=''>삭제</a>";
-                    output += "</td>";
-                    output += "<td th:unless='${comment.commentWriter == session.principal.username}'></td>";
-                    output += "</tr>";
+                    output += "<td>" + moment(res[i].commentCreatedTime).format('YYYY-MM-DD HH:mm:ss') + "</td>";
+                    if (res[i].userId == session_id) {
+                        output += "<td>";
+                        output += "<a href=''>수정</a> /";
+                        output += "<a href=''>삭제</a>";
+                        output += "</td>";
+                    }else {
+                        output += "<td></td>";
+                        output += "</tr>";
+                    }
                 }
                 output += "</tbody>";
                 output += "</table>";

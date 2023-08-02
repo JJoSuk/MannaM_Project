@@ -5,8 +5,11 @@ import demo.mannam_project.board.domain.CommentEntity;
 import demo.mannam_project.board.dto.CommentDTO;
 import demo.mannam_project.board.repository.BoardRepository;
 import demo.mannam_project.board.repository.CommentRepository;
+import demo.mannam_project.domain.User;
+import demo.mannam_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +20,27 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
+    @Transactional
     public Long save(CommentDTO commentDTO) {
         /* 부모엔티티(BoardEntity) */
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(commentDTO.getBoardId());
+        Optional<User> optionalUser = userRepository.findById(commentDTO.getUserId());
         if(optionalBoardEntity.isPresent()){
-            BoardEntity boardEntity = optionalBoardEntity.get();
-            CommentEntity commentEntity = CommentEntity.toSaveEntity(commentDTO, boardEntity);
-            return commentRepository.save(commentEntity).getId();
+            if (optionalUser.isPresent()){
+                BoardEntity boardEntity = optionalBoardEntity.get();
+                User user = optionalUser.get();
+                CommentEntity commentEntity = CommentEntity.toSaveEntity(commentDTO, boardEntity, user);
+                return commentRepository.save(commentEntity).getId();
+            }
+            return null;
         }else {
             return null;
         }
     }
 
+    @Transactional
     public List<CommentDTO> findAll(Long boardId) {
         // select * from comment_table where board_id=? order by id desc;
         BoardEntity boardEntity = boardRepository.findById(boardId).get();

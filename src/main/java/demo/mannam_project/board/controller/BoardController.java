@@ -41,30 +41,26 @@ public class BoardController {
         model.addAttribute("page", pageable.getPageNumber());
         return "redirect:/board/paging";
     }
+
+    //////////// 게시판 더미 데이터용 save 메소드 ///////////////
 //    @PostMapping("/save")
-//    public String dummyData(){
+//    public String dummyData(@PageableDefault(page=1) Pageable pageable,
+//                            Model model,
+//                            HttpSession session) throws IOException {
 //        for(int i=1;i<=100;i++){
 //            BoardDTO boardDTO = BoardDTO.builder()
 //                    .id((long) i)
 //                    .boardWriter("아무개"+i)
-//                    .boardPass("1234")
 //                    .boardTitle("테스트 제목 - "+i)
 //                    .boardContents("테스트 내용입니다~~~~ ["+i+"]")
+//                    .user((User)session.getAttribute("principal"))
 //                    .build();
 //            boardService.save(boardDTO);
 //        }
-//        return "index";
-//    }
-
-//    @GetMapping("/")
-//    public String findAll(Model model,
-//                          @PageableDefault(page=1) Pageable pageable) {
-//        // DB에서 전체 게시글 데이터를 가져와서 list.html에 보여준다.
-//        List<BoardDTO> boardDTOList = boardService.findAll();
-//        model.addAttribute("boardList", boardDTOList);
-//        model.addAttribute("page", pageable.getPageNumber());
+//        model.addAttribute("page", pageable);
 //        return "redirect:/board/paging";
 //    }
+    
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model,
