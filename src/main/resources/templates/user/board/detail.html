@@ -93,8 +93,7 @@
                         <td th:text="*{#temporals.format(comment.commentCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:if='${comment.userId == session.principal.id}'>
                             <a href="">수정</a> /
-<!--                            <a href="" th:onclick="|commentDelete(${comment.id})|">삭제</a>-->
-                            <a href="">삭제</a>
+                            <a th:onclick="|commentDelete(${comment.id})|">삭제</a>
                         </td>
                         <td th:unless='${comment.userId == session.principal.id}'></td>
                     </tr>
@@ -158,7 +157,7 @@
                 if (res[i].userId == session_id) {
                     output += "<td>";
                     output += "<a href=''>수정</a> /";
-                    output += "<a href=''>삭제</a>";
+                    output += "<a onclick='commentDelete("+ res[i].id +")'>삭제</a>";
                     output += "</td>";
                 }else {
                     output += "<td></td>";
@@ -194,20 +193,20 @@
     }
 
     // comment Delete
-    // const commentDelete = (id) => {
-    //     $.ajax({
-    //         // 요청방식 : post, 요청주소 : /comment/save, 요청데이터 : 작성자, 작성내용, 게시글번호
-    //         type: "delete",
-    //         url: "/comment/delete/" + id,
-    //         contentType:"application/json; charset=utf-8",
-    //         success: function (res){
-    //             print_comment(res)
-    //         },
-    //         error: function (err) {
-    //             console.log("요청실패", err);
-    //         }
-    //     });
-    // }
+    const commentDelete = (id) => {
+        $.ajax({
+            // 요청방식 : post, 요청주소 : /comment/save, 요청데이터 : 작성자, 작성내용, 게시글번호
+            type: "delete",
+            url: "/comment/delete/" + id,
+            contentType:"application/json; charset=utf-8",
+            success: function (res){
+                print_comment(res)
+            },
+            error: function (err) {
+                console.log("요청실패", err);
+            }
+        });
+    }
 
 </script>
 <!-- 푸터 -->

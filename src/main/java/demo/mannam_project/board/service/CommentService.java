@@ -54,14 +54,18 @@ public class CommentService {
         return commentDTOList;
     }
 
-    // 댓글 기본키로 게시글 기본키 찾기
-//    public Long findBoardIdByCommentId(Long commentId){
-//        return boardRepository.findBoardIdByCommnetId(commentId);
-//    }
+    public CommentDTO findById(Long id) {
+        CommentEntity comment = commentRepository.findById(id).orElse(null);
+        CommentDTO commentDTO = CommentDTO.toCommentDTO(comment, comment.getBoardEntity().getId());
+        return commentDTO;
+    }
 
-    // 댓글 삭제
-//    @Transactional
-//    public void delete(Long id) {
-//        commentRepository.deleteById(id);
-//    }
+
+//     댓글 삭제
+    @Transactional
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
+    }
+
+
 }
