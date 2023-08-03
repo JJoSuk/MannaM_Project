@@ -3,7 +3,24 @@
 <!--  헤더  -->
 <th:block th:replace="/user/inc/header::headerFragment"/>
 
-<div id="map" style="width:100%;height:70vh;padding-top: 64px;padding-left: 16px;"></div>
+<div id="map" style="width:100%;height:70vh;padding-top: 64px;padding-left: 16px;">
+    <form action="/markupdate" method="post">
+    <div id="modal" style="display:none;">
+        <div class="modal_content">
+            <h2>마커 이름 변경</h2>
+            <input type="hidden" name="mid" id="mid">
+            <input type="text" name="markname" id="markname">
+<!--            <button type="button" id="markname_update_btn">수정</button>-->
+            <button type="submit">수정</button>
+            <button type="button" id="modal_close_btn">닫기</button>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+
+
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=67e976d6b999592753b7dacf13bb3bed&libraries=services"></script>
 <script th:inline="javascript">
     // 카카오맵 API 초기화
@@ -48,6 +65,8 @@
 
         console.log(positions);
 
+
+
         // 커스텀 오버레이에 표시할 컨텐츠를 JavaScript로 생성하는 함수
 function createCustomOverlayContent(positions) {
     // 컨텐츠 요소들을 생성합니다
@@ -63,13 +82,26 @@ function createCustomOverlayContent(positions) {
     var titleText = document.createTextNode(positions.title);
     titleDiv.appendChild(titleText);
 
-    var changeButton = document.createElement('a');
+        // modal로 열기
+    var changeButton = document.createElement('button');
     changeButton.className = 'btn btn-success';
-<!--    changeButton.style.margin: 0 auto;-->
+    changeButton.id = 'modal_open_btn';
     changeButton.type = 'button';
-    changeButton.href = '/markupdate/'+positions.mid;
     changeButton.textContent = '변경';
     titleDiv.appendChild(changeButton);
+
+    // 모달 열기 버튼 클릭 이벤트 처리
+    changeButton.onclick = function () {
+        document.getElementById('modal').style.display = 'block';
+
+         var markname = positions.title; // 해당 마커의 title 값
+         var mid = positions.mid; // 해당 마커의 title 값
+         console.log(positions.title);
+
+     $(".modal_content #markname").val( markname );
+     $(".modal_content #mid").val( mid );
+
+    };
 
     var closeButton = document.createElement('div');
     closeButton.className = 'close';
@@ -124,6 +156,13 @@ function createCustomOverlayContent(positions) {
 
     return wrap;
 }
+
+
+
+    // 모달 닫기 버튼 클릭 이벤트 처리
+    document.getElementById('modal_close_btn').onclick = function () {
+        document.getElementById('modal').style.display = 'none';
+    };
         // 현재 열린 오버레이를 저장할 변수
         let currentOverlay = null;
 
@@ -162,15 +201,17 @@ for (var i = 0; i < positions.length; i++) {
 
             customOverlay.setMap(map);
             currentOverlay = customOverlay;
+
+
         });
 
         // 오버레이 닫기 버튼 클릭 이벤트 처리
         var closeButton = content.querySelector('.close');
         closeButton.onclick = closeOverlay;
     }
+
 });
 </script>
-
 <!-- 푸터 -->
 <th:block th:replace="/user/inc/footer::footerFragment" />
 </html>

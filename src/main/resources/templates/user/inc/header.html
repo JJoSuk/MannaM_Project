@@ -84,6 +84,38 @@
     .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info .tel {font-size: 11px; color: #5085BB;}
 </style>
+        <style>
+#modal {
+<!--  display:none;-->
+
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:99;
+  position: absolute;
+  top: 64px; /* 원하는 위치로 상하 조절 */
+  left: 16px; /* 원하는 위치로 좌우 조절 */
+}
+
+#modal h2 {
+  margin:0;
+}
+
+#modal button {
+  display:inline-block;
+  width:100px;
+  margin-left:calc(100% - 100px - 10px);
+}
+
+#modal .modal_content {
+  width:300px;
+  margin:100px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+}
+</style>
         <title>Mannam 거꾸로 해도 mannaM...</title>
         <link rel="icon" type="image/png" th:href="@{/img/subak.png}">
     </head>

@@ -188,6 +188,9 @@ public class MapController {
     @PostMapping("/markupdate")
     public String updatePost( String markname, int mid, @ModelAttribute("item") ItemRequest itemRequest, HttpServletRequest request) throws IOException {
 
+        System.out.println("markname = " + markname);
+        System.out.println("mid = " + mid);
+
         List<Mark> marks = markRepository.findAll();
 
 
@@ -197,4 +200,6 @@ public class MapController {
 
         return "redirect:/kakaomarkmap";
     }
+
+
 }
