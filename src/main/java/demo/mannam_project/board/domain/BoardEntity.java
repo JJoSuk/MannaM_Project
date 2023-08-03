@@ -42,7 +42,7 @@ public class BoardEntity extends BaseEntity {
     private User user;
 
     @Builder
-    public BoardEntity(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, int fileAttached, User user){
+    public BoardEntity(Long id, String boardWriter, String boardTitle, String boardContents, int boardHits, int fileAttached, User user){
         this.id = id;
         this.boardWriter = boardWriter;
         this.boardTitle = boardTitle;

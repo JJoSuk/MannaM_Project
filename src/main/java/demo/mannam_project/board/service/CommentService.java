@@ -67,5 +67,11 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
+//    댓글 수정
+    @Transactional
+    public  void modify(CommentDTO commentDTO) {
+        CommentEntity comment = commentRepository.findById(commentDTO.getId()).orElse(null);
+        comment.setCommentContents(commentDTO.getCommentContents());
+    }
 
 }

@@ -38,7 +38,6 @@ public class CommentController {
         commentService.delete(id);
 
         List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
-        System.out.println("boardId : " + commentDTO.getBoardId());
         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
 
 //        if (deleteResult != null) {
@@ -46,5 +45,25 @@ public class CommentController {
 //        } else {
 //            return new ResponseEntity<>("해당 댓글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
 //        }
+    }
+
+    @GetMapping("/modify/{id}")
+    public ResponseEntity modifyForm(@PathVariable Long id) {
+        CommentDTO commentDTO = commentService.findById(id);
+        List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
+        return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
+    }
+
+    @PatchMapping("/modify")
+    public ResponseEntity modify(@ModelAttribute CommentDTO commentDTO) {
+        System.out.println("commentDTO = " + commentDTO);
+
+        CommentDTO findDTO = commentService.findById(commentDTO.getId());
+        System.out.println("findDTO = " + findDTO);
+        commentDTO.setCommentContents(commentDTO.getCommentContents());
+        commentService.modify(commentDTO);
+
+        List<CommentDTO> commentDTOList = commentService.findAll(findDTO.getBoardId());
+        return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
     }
 }
