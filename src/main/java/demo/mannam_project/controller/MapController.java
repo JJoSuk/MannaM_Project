@@ -201,5 +201,11 @@ public class MapController {
         return "redirect:/kakaomarkmap";
     }
 
+    @GetMapping("/root2")
+    public String root() {
+
+        return "user/map/root2";
+    }
+
 
 }
